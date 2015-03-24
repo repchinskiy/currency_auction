@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">currency.auction</string>
+    <string name="app_name">Currency Auction</string>
+    <string name="please_wait">Загрузка.\nПожалуйста подождите.</string>
+    <string name="buy_title">ПОКУПАЮТ</string>
+    <string name="sell_title">ПРОДАЮТ</string>
 </resources>

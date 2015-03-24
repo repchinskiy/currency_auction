@@ -12,7 +12,7 @@ import java.util.List;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrencyResponse {
-    @JsonProperty("")
+    @JsonProperty("result")
     List<CurrencyInfo> currencyInfoList;
 
     public List<CurrencyInfo> getCurrencyInfoList() {
@@ -21,5 +21,12 @@ public class CurrencyResponse {
 
     public void setCurrencyInfoList(List<CurrencyInfo> currencyInfoList) {
         this.currencyInfoList = currencyInfoList;
+    }
+
+    @Override
+    public String toString() {
+        return "BIZON CurrencyResponse{" +
+                "currencyInfoList=" + currencyInfoList +
+                '}';
     }
 }

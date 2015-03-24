@@ -1,5 +1,6 @@
 package com.web.bean;
 
+import com.web.bean.logger.Logger;
 import org.apache.http.*;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
@@ -15,14 +16,15 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.net.ssl.SSLException;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
-
-import com.web.bean.logger.*;
 
 public class WebClient implements Runnable {
     private ObjectMapper objectMapper;
@@ -221,7 +223,7 @@ public class WebClient implements Runnable {
 //                        System.out.println("BIZON webRequest.responseClass : " + webRequest.responseClass + " finish parse: " + (System.currentTimeMillis() - now) + "ms");
 
                         if (webRequest.listener != null) {
-                            Logger.trace("ON RESPONSE " + response);
+//                            Logger.trace("ON RESPONSE " + response);
                             webRequest.listener.onResponse(response);
                         }
                     } else {

@@ -2,7 +2,6 @@ package com.web.bean;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by bizon on 23.03.2015.
@@ -10,16 +9,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrencyInfo {
-//    @JsonProperty("tm")
     private String time;
-
-//    @JsonProperty("p")
     private String price;
-
-//    @JsonProperty("s")
     private String sum;
-
-//    @JsonProperty("txt")
     private String text;
 
     public String getTime() {
@@ -52,5 +44,15 @@ public class CurrencyInfo {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "\nBIZON CurrencyInfo{" +
+                "time='" + time + '\'' +
+                ", price='" + price + '\'' +
+                ", sum='" + sum + '\'' +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

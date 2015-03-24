@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:padding="5dp"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content">
+
+
+    <!--<ImageView-->
+    <!--android:id="@+id/progress_anim"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--style="@style/progress_size_list"-->
+    <!--android:background="@drawable/progress_animation" />-->
+    <ProgressBar
+            android:id="@+id/progress_anim"
+            android:indeterminateDrawable="@drawable/progress"
+            android:indeterminateOnly="true"
+            android:layout_alignParentRight="true"
+            style="@style/progress_size_list"/>
+
+    <TextView
+            android:text="@string/please_wait"
+            style="@style/text_style_3_grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"/>
+
+</LinearLayout>

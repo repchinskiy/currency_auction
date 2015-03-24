@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="progress_size_list">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+    </style>
+    <style name="text_style_3_grey">
+        <item name="android:textColor">#c8c8c8</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

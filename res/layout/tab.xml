@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+    <include layout="@layout/currency_info_header"/>
+
+    <ListView
+            android:layout_width="match_parent"
+            android:cacheColorHint="#00000000"
+            android:id="@+id/list"
+            android:layout_gravity="top"
+            android:layout_height="wrap_content"
+            android:fastScrollEnabled="false"
+            android:dividerHeight="0dp"
+            android:scrollbarSize="6dp"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="false"
+            android:clickable="false"
+            />
+
+    <!--android:scrollbarTrackVertical="@drawable/scrollbar_vertical_track"-->
+    <!--android:scrollbarThumbVertical="@drawable/scrollbar_vertical_thumb"-->
+</LinearLayout>
