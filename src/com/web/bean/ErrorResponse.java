@@ -1,7 +1,7 @@
 package com.web.bean;
 
 
-public class ErrorResponse {
+public class ErrorResponse implements IResponse {
     private ErrorType errorType = ErrorType.UNRECOGNIZED;
     protected String message;
 

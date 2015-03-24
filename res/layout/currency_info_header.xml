@@ -4,30 +4,74 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
-              android:clickable="true">
-    <TextView
-            android:layout_height="wrap_content"
+        >
+    <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="Время"
-            android:id="@+id/time_header"
-            android:gravity="center"/>
-
-    <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Курс"
-            android:id="@+id/price_header"
-            android:gravity="left"/>
+            android:gravity="left"
+            android:layout_weight="1"
+            >
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Время"
+                android:id="@+id/time_header"
+                android:gravity="center"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/time_sort_icon"
+                android:layout_gravity="center"
+                >
+        </ImageView>
+    </LinearLayout>
 
-    <TextView
+    <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Сумма"
-            android:id="@+id/sum_header"
+            android:gravity="left"
+            android:layout_weight="1"
+            >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Курс"
+                android:id="@+id/price_header"
+                android:gravity="left"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/price_sort_icon"
+                android:layout_gravity="center"
+                >
+
+        </ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:gravity="right"
-            android:paddingRight="15dp"/>
+            android:layout_weight="1.5"
+            android:paddingRight="15dp"
+            >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Сумма"
+                android:id="@+id/sum_header"
+                android:gravity="right"
+                />
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sum_sort_icon"
+                android:layout_gravity="center"
+                >
+
+        </ImageView>
+    </LinearLayout>
+
 
     <TextView
             android:layout_width="0dp"

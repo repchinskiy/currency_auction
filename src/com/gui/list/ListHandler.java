@@ -17,8 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class ListHandler<I> extends BaseAdapter {
-    protected boolean orderAsc = true;
-
     protected ListView listView;
     protected View waitItem;
 
@@ -238,13 +236,13 @@ public abstract class ListHandler<I> extends BaseAdapter {
         this.currentPage = currentPage;
     }
 
-    public boolean isOrderAsc() {
-        return orderAsc;
-    }
-
-    public void sort(Comparator<I> comparator) {
+    public void sort(Comparator<I> comparator, Runnable runnable) {
         Collections.sort(items, comparator);
-        orderAsc = !orderAsc;
+
+        if (runnable != null) {
+            runnable.run();
+        }
+
         notifyDataSetChanged();
     }
 }

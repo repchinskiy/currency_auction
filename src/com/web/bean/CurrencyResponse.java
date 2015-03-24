@@ -11,7 +11,7 @@ import java.util.List;
  */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CurrencyResponse {
+public class CurrencyResponse implements IResponse {
     @JsonProperty("result")
     List<CurrencyInfo> currencyInfoList;
 

@@ -14,6 +14,8 @@ import com.web.bean.CurrencyInfo;
  * Time: 11:47
  */
 public class CurrencyInfoAdapter extends ListHandler<CurrencyInfo> {
+    private static boolean[] ORDER_ASC_PROPS = {true, false, false}; // 0 - time, 1 - price, 2 - sum
+
     private class ViewHolder {
         TextView time;
         TextView price;
@@ -62,5 +64,28 @@ public class CurrencyInfoAdapter extends ListHandler<CurrencyInfo> {
         return convertView;
     }
 
+    public boolean isOrderAscTime() {
+        return ORDER_ASC_PROPS[0];
+    }
+
+    public boolean isOrderAscPrice() {
+        return ORDER_ASC_PROPS[1];
+    }
+
+    public boolean isOrderAscSum() {
+        return ORDER_ASC_PROPS[2];
+    }
+
+    public void inverseOrderTime() {
+        ORDER_ASC_PROPS[0] = !ORDER_ASC_PROPS[0];
+    }
+
+    public void inverseOrderPrice() {
+        ORDER_ASC_PROPS[1] = !ORDER_ASC_PROPS[1];
+    }
+
+    public void inverseOrderSum() {
+        ORDER_ASC_PROPS[2] = !ORDER_ASC_PROPS[2];
+    }
 }
 

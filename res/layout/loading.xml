@@ -22,7 +22,7 @@
 
     <TextView
             android:text="@string/please_wait"
-            style="@style/text_style_3_grey"
+            style="@style/text_style_0_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"/>

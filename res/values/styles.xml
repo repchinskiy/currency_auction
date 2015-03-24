@@ -4,7 +4,7 @@
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">80dp</item>
     </style>
-    <style name="text_style_3_grey">
+    <style name="text_style_0_grey">
         <item name="android:textColor">#c8c8c8</item>
         <item name="android:textSize">18sp</item>
     </style>
