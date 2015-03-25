@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight="0.7"
+              android:layout_height="wrap_content"
         >
     <LinearLayout
             android:layout_width="match_parent"
@@ -19,9 +18,11 @@
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:text="Средняя покупка:"
+                    android:text="@string/avg_buy"
                     android:gravity="center"
-                    android:paddingLeft="5dp"/>
+                    android:paddingLeft="5dp"
+                    style="@style/text_style_0_white"
+                   />
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
@@ -29,7 +30,8 @@
                     android:text="0.0"
                     android:id="@+id/avgBuyPrice"
                     android:gravity="center"
-                    android:paddingLeft="5dp"/>
+                    android:paddingLeft="5dp"
+                    style="@style/text_style_0_white"/>
         </LinearLayout>
 
         <LinearLayout
@@ -42,16 +44,18 @@
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:text="Средняя продажа:"
+                    android:text="@string/avg_sell"
                     android:gravity="center"
-                    android:paddingLeft="5dp"/>
+                    android:paddingLeft="5dp"
+                    style="@style/text_style_0_white"/>
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:text="0.0"
                     android:id="@+id/avgSellPrice"
                     android:gravity="center"
-                    android:paddingLeft="5dp"/>
+                    android:paddingLeft="5dp"
+                    style="@style/text_style_0_white"/>
         </LinearLayout>
 
         <LinearLayout
@@ -67,6 +71,7 @@
                     android:layout_width="match_parent"
                     android:text="Заявки:"
                     android:gravity="center"
+                    style="@style/text_style_0_white"
                     />
 
             <LinearLayout android:layout_width="match_parent"
@@ -78,6 +83,7 @@
                         android:text="0.0"
                         android:id="@+id/buyRequestCount"
                         android:gravity="center"
+                        style="@style/text_style_0_white"
                         />
                 <TextView
                         android:layout_height="wrap_content"
@@ -85,6 +91,7 @@
                         android:text="0.0"
                         android:id="@+id/sellRequestCount"
                         android:gravity="left"
+                        style="@style/text_style_0_white"
                         />
             </LinearLayout>
         </LinearLayout>
@@ -105,7 +112,8 @@
                         android:layout_weight="1"
                         android:text="Покупают:"
                         android:gravity="right"
-                        android:paddingLeft="3dp"/>
+                        android:paddingLeft="3dp"
+                        style="@style/text_style_0_white"/>
                 <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="0dp"
@@ -113,7 +121,8 @@
                         android:text="0.0"
                         android:id="@+id/buySum"
                         android:gravity="left"
-                        android:paddingLeft="3dp"/>
+                        android:paddingLeft="3dp"
+                        style="@style/text_style_0_white"/>
             </LinearLayout>
             <LinearLayout
                     android:layout_width="match_parent"
@@ -125,7 +134,8 @@
                         android:layout_weight="1"
                         android:text="Продают:"
                         android:gravity="right"
-                        android:paddingLeft="3dp"/>
+                        android:paddingLeft="3dp"
+                        style="@style/text_style_0_white"/>
                 <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="0dp"
@@ -133,7 +143,8 @@
                         android:text="0.0"
                         android:id="@+id/sellSum"
                         android:gravity="left"
-                        android:paddingLeft="3dp"/>
+                        android:paddingLeft="3dp"
+                        style="@style/text_style_0_white"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -1,18 +1,20 @@
 package com.gui;
 
-import android.app.TabActivity;
-import android.content.Intent;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.widget.TabHost;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 import com.example.currency_auction.R;
+import com.gui.adapter.TabsPagerAdapter;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class Main extends TabActivity {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     protected NumberFormat formatter = new DecimalFormat("#0.00");
     DecimalFormat formatter2 = (DecimalFormat) NumberFormat.getInstance(Locale.US);
     DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
@@ -22,6 +24,12 @@ public class Main extends TabActivity {
         formatter2.setDecimalFormatSymbols(customSymbol);
     }
 
+    private ViewPager viewPager;
+    private TabsPagerAdapter mAdapter;
+    private ActionBar actionBar;
+    // Tab titles
+    private String[] tabs = {"ПОКУПАЮТ", "ПРОДАЮТ"};
+
     /**
      * Called when the activity is first created.
      */
@@ -29,24 +37,71 @@ public class Main extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
 
-        DataService.getInstance().setMainActivity(this);
+        DataService.getInstance().setMainActivityActivity(this);
 
+        // Initilization
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        actionBar = getActionBar();
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
-        TabHost tabHost = getTabHost();
-        TabHost.TabSpec spec;
-        Intent intent;
+        viewPager.setAdapter(mAdapter);
 
-        intent = new Intent().setClass(this, BuyActivity.class);
-        spec = tabHost.newTabSpec("buy").setIndicator(getString(R.string.buy_title))
-                .setContent(intent);
-        tabHost.addTab(spec);
+        if (android.os.Build.VERSION.SDK_INT >= 14) {
+            actionBar.setHomeButtonEnabled(false);
+        }
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        intent = new Intent().setClass(this, SellActivity.class);
-        spec = tabHost.newTabSpec("sell").setIndicator(getString(R.string.sell_title))
-                .setContent(intent);
-        tabHost.addTab(spec);
+        // Adding Tabs
+        for (String tab_name : tabs) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name)
+                    .setTabListener(this));
+        }
+
+        /**
+         * on swiping the viewpager make respective tab selected
+         * */
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+                System.out.println("BIZON MainActivity.onPageSelected");
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                System.out.println("BIZON MainActivity.onPageScrolled");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                System.out.println("BIZON MainActivity.onPageScrollStateChanged");
+            }
+        });
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+        System.out.println("BIZON MainActivity.onTabReselected");
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        // on tab selected
+        // show respected fragment view
+        int position = tab.getPosition();
+        viewPager.setCurrentItem(position);
+        System.out.println("BIZON MainActivity.onTabSelected");
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+        System.out.println("BIZON MainActivity.onTabUnselected");
     }
 
     public void updateBuyStatistic() {

@@ -1,7 +1,6 @@
 package com.gui;
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import com.example.currency_auction.R;
@@ -16,14 +15,9 @@ import java.util.Comparator;
 /**
  * Created by Bizon on 24.03.2015.
  */
-public abstract class CurrencyAuctionActivity extends Activity {
+public abstract class CurrencyAuctionActivity extends Fragment {
     private CurrencyInfoAdapter currencyInfoAdapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tab);
-    }
+    protected View rootView;
 
     private void hideAllSortArrow() {
         findViewById(R.id.time_sort_icon).setVisibility(View.INVISIBLE);
@@ -41,6 +35,9 @@ public abstract class CurrencyAuctionActivity extends Activity {
         arrow.setVisibility(View.VISIBLE);
     }
 
+    private View findViewById(int id) {
+       return rootView.findViewById(id);
+    }
 
     protected void initCurrencyInfoAdapter() {
         findViewById(R.id.time_header).setOnClickListener(new View.OnClickListener() {
@@ -138,11 +135,11 @@ public abstract class CurrencyAuctionActivity extends Activity {
         });
 
         currencyInfoAdapter.removeAllItems();
-        currencyInfoAdapter.create(this, this.getWindow().getDecorView(), 0);
+        currencyInfoAdapter.create(getActivity(), rootView, 0);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         initCurrencyInfoAdapter();
     }

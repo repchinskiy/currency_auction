@@ -4,4 +4,7 @@
     <string name="please_wait">Загрузка.\nПожалуйста подождите.</string>
     <string name="buy_title">ПОКУПАЮТ</string>
     <string name="sell_title">ПРОДАЮТ</string>
+    <string name="avg_buy">Ср. покупка</string>
+    <string name="avg_sell">Ср. продажа</string>
+
 </resources>

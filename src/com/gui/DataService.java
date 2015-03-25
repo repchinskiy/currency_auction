@@ -24,7 +24,7 @@ public class DataService {
     private long lastUpdateBuy = 0;
     private long lastUpdateSell = 0;
 
-    private Main mainActivity;
+    private MainActivity mainActivityActivity;
 
     public static DataService getInstance() {
         if (instance == null) {
@@ -39,8 +39,8 @@ public class DataService {
         updateData();
     }
 
-    public void setMainActivity(Main mainActivity) {
-        this.mainActivity = mainActivity;
+    public void setMainActivityActivity(MainActivity mainActivityActivity) {
+        this.mainActivityActivity = mainActivityActivity;
     }
 
     private void updateData() {
@@ -60,7 +60,7 @@ public class DataService {
                 }
                 lastUpdateBuy = System.currentTimeMillis();
                 updateBuyProcess = false;
-                mainActivity.updateBuyStatistic();
+                mainActivityActivity.updateBuyStatistic();
                 System.out.println("BIZON DataService.updateBuy response");
             }
         });
@@ -78,7 +78,7 @@ public class DataService {
                 }
                 lastUpdateSell = System.currentTimeMillis();
                 updateSellProcess = false;
-                mainActivity.updateSellStatistic();
+                mainActivityActivity.updateSellStatistic();
                 System.out.println("BIZON DataService.updateSell response");
             }
         });
@@ -113,6 +113,7 @@ public class DataService {
 
         if (System.currentTimeMillis() - lastUpdateBuy > UPDATE_INTERVAL) {
             updateBuy();
+            handler.removeAllItems();
             createMoreBuyCurrencyInfoItems(handler);
             return;
         }
@@ -128,6 +129,7 @@ public class DataService {
 
         if (System.currentTimeMillis() - lastUpdateSell > UPDATE_INTERVAL) {
             updateSell();
+            handler.removeAllItems();
             createMoreSellCurrencyInfoItems(handler);
             return;
         }
