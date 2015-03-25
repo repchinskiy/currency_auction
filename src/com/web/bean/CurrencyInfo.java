@@ -1,5 +1,6 @@
 package com.web.bean;
 
+import com.web.bean.logger.Logger;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -13,6 +14,9 @@ public class CurrencyInfo {
     private String price;
     private String sum;
     private String text;
+
+    private transient float priceF;
+    private transient float sumF;
 
     public String getTime() {
         return time;
@@ -44,6 +48,36 @@ public class CurrencyInfo {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public float getPriceF() {
+        return priceF;
+    }
+
+    public void setPriceF(float priceF) {
+        this.priceF = priceF;
+    }
+
+    public float getSumF() {
+        return sumF;
+    }
+
+    public void setSumF(float sumF) {
+        this.sumF = sumF;
+    }
+
+    public void convertStrToFloat() {
+        try {
+            this.priceF = Float.parseFloat(price.replaceAll(",", "."));
+        } catch (NumberFormatException e) {
+            Logger.error("BIZON convertStrToFloat: " + price, e);
+        }
+
+        try {
+            this.sumF = Float.parseFloat(sum.replaceAll("\\$", "").replaceAll("\\s+", "").trim());
+        } catch (NumberFormatException e) {
+            Logger.error("BIZON convertStrToFloat: " + sum, e);
+        }
     }
 
     @Override

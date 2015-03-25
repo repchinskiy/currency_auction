@@ -12,6 +12,7 @@ public class Utils {
             for (CurrencyInfo currencyInfo : currencyResponse.getCurrencyInfoList()) {
                 if (currencyInfo.getText() != null) {
                     currencyInfo.setText(currencyInfo.getText().replaceAll("\n", "").replaceAll("\\s+", " ").trim());
+                    currencyInfo.convertStrToFloat();
                 }
             }
         }

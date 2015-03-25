@@ -6,6 +6,7 @@ import com.service.WebClientSingleton;
 import com.web.bean.*;
 import com.web.bean.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,12 +16,15 @@ public class DataService {
     private final static long UPDATE_INTERVAL = 60000;
     private static DataService instance;
     private WebClient webClient;
-    private List<CurrencyInfo> buyCurrencyInfoList;
-    private List<CurrencyInfo> sellCurrencyInfoList;
+    private List<CurrencyInfo> buyCurrencyInfoList = new ArrayList<>();
+    private List<CurrencyInfo> sellCurrencyInfoList = new ArrayList<>();
+    ;
     private boolean updateBuyProcess;
     private boolean updateSellProcess;
     private long lastUpdateBuy = 0;
     private long lastUpdateSell = 0;
+
+    private Main mainActivity;
 
     public static DataService getInstance() {
         if (instance == null) {
@@ -33,6 +37,10 @@ public class DataService {
         webClient = WebClientSingleton.getInstance();
         webClient.setKeepAlive(true);
         updateData();
+    }
+
+    public void setMainActivity(Main mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     private void updateData() {
@@ -52,6 +60,7 @@ public class DataService {
                 }
                 lastUpdateBuy = System.currentTimeMillis();
                 updateBuyProcess = false;
+                mainActivity.updateBuyStatistic();
                 System.out.println("BIZON DataService.updateBuy response");
             }
         });
@@ -69,6 +78,7 @@ public class DataService {
                 }
                 lastUpdateSell = System.currentTimeMillis();
                 updateSellProcess = false;
+                mainActivity.updateSellStatistic();
                 System.out.println("BIZON DataService.updateSell response");
             }
         });
@@ -124,4 +134,84 @@ public class DataService {
 
         handler.takeMoreItems(sellCurrencyInfoList.size(), sellCurrencyInfoList);
     }
+
+
+    public float getAvgBuy() {
+        return getAvgPrice(buyCurrencyInfoList);
+    }
+
+    public float getAvgSell() {
+        return getAvgPrice(sellCurrencyInfoList);
+    }
+
+    public float getSumBuy() {
+        return getTotalSum(buyCurrencyInfoList);
+    }
+
+    public float getSumSell() {
+        return getTotalSum(sellCurrencyInfoList);
+    }
+
+    private float getAvgPrice(List<CurrencyInfo> list) {
+        float avg = 0;
+
+        if (list != null) {
+            int size = list.size();
+            return getSumPrice(list) / size;
+        }
+
+        return avg;
+    }
+
+    private float getSumPrice(List<CurrencyInfo> list) {
+        float avg = 0;
+
+        if (list != null) {
+            int size = list.size();
+            if (size > 0) {
+                for (CurrencyInfo currencyInfo : list) {
+                    avg += currencyInfo.getPriceF();
+                }
+                return avg;
+            }
+
+        }
+
+        return avg;
+    }
+
+    private float getTotalSum(List<CurrencyInfo> list) {
+        float avg = 0;
+
+        if (list != null) {
+            int size = list.size();
+            if (size > 0) {
+                for (CurrencyInfo currencyInfo : list) {
+                    avg += currencyInfo.getSumF();
+                }
+                return avg;
+            }
+
+        }
+
+        return avg;
+    }
+
+    public int getBuyRequestCount() {
+        if (buyCurrencyInfoList != null) {
+            return buyCurrencyInfoList.size();
+        }
+
+        return 0;
+    }
+
+    public int getSellRequestCount() {
+        if (sellCurrencyInfoList != null) {
+            return sellCurrencyInfoList.size();
+        }
+
+        return 0;
+    }
+
+
 }

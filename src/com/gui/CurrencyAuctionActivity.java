@@ -9,7 +9,6 @@ import com.gui.list.CurrencyInfoAdapter;
 import com.gui.list.ListHandler;
 import com.gui.list.ListItemsFactory;
 import com.web.bean.CurrencyInfo;
-import com.web.bean.WebClient;
 import com.web.bean.logger.Logger;
 
 import java.util.Comparator;
