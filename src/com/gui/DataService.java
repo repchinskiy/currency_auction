@@ -1,5 +1,6 @@
 package com.gui;
 
+import android.os.Handler;
 import com.gui.list.ListHandler;
 import com.service.Utils;
 import com.service.WebClientSingleton;
@@ -13,18 +14,18 @@ import java.util.List;
  * Created by Bizon on 24.03.2015.
  */
 public class DataService {
-    private final static long UPDATE_INTERVAL = 60000;
+    private final static long UPDATE_INTERVAL = 60_000;
+    private final static long REQUEST_ATTEMPT_INTERVAL = 3000;
+
     private static DataService instance;
     private WebClient webClient;
     private List<CurrencyInfo> buyCurrencyInfoList = new ArrayList<>();
     private List<CurrencyInfo> sellCurrencyInfoList = new ArrayList<>();
-    ;
-    private boolean updateBuyProcess;
-    private boolean updateSellProcess;
+
     private long lastUpdateBuy = 0;
     private long lastUpdateSell = 0;
-
     private MainActivity mainActivityActivity;
+    private Handler handler = new Handler();
 
     public static DataService getInstance() {
         if (instance == null) {
@@ -33,53 +34,87 @@ public class DataService {
         return instance;
     }
 
+    public static DataService getInstance(MainActivity mainActivity) {
+        instance = getInstance();
+        instance.setMainActivityActivity(mainActivity);
+        instance.updateData();
+
+        return instance;
+    }
+
+
     public DataService() {
         webClient = WebClientSingleton.getInstance();
         webClient.setKeepAlive(true);
-        updateData();
     }
 
     public void setMainActivityActivity(MainActivity mainActivityActivity) {
         this.mainActivityActivity = mainActivityActivity;
     }
 
-    private void updateData() {
+    public void updateData() {
         updateBuy();
         updateSell();
     }
 
-    public void updateBuy() {
+    public synchronized void updateBuy() {
+        updateBuy(null);
+    }
+
+    public synchronized void updateBuy(final ListHandler listHandler) {
         System.out.println("BIZON DataService.updateBuy request");
-        updateBuyProcess = true;
         getData(WebClient.GET_BUY, new ResponseNotifier() {
             @Override
             public void notify(IResponse response) {
                 if (response instanceof CurrencyResponse) {
                     CurrencyResponse currencyResponse = (CurrencyResponse) response;
                     buyCurrencyInfoList = currencyResponse.getCurrencyInfoList();
+                    lastUpdateBuy = System.currentTimeMillis();
+                    mainActivityActivity.updateBuyStatistic();
+                    if (listHandler != null) {
+                        createMoreBuyCurrencyInfoItems(listHandler);
+                    }
+                    System.out.println("BIZON DataService.updateBuy response");
+                } else {
+//                    // через REQUEST_ATTEMPT_INTERVAL мс пробуем еще раз
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateBuy(listHandler);
+                        }
+                    }, REQUEST_ATTEMPT_INTERVAL);
                 }
-                lastUpdateBuy = System.currentTimeMillis();
-                updateBuyProcess = false;
-                mainActivityActivity.updateBuyStatistic();
-                System.out.println("BIZON DataService.updateBuy response");
             }
         });
     }
 
-    public void updateSell() {
+    public synchronized void updateSell() {
+        updateSell(null);
+    }
+
+    public synchronized void updateSell(final ListHandler listHandler) {
         System.out.println("BIZON DataService.updateSell request");
-        updateSellProcess = true;
         getData(WebClient.GET_SELL, new ResponseNotifier() {
             @Override
             public void notify(IResponse response) {
                 if (response instanceof CurrencyResponse) {
                     CurrencyResponse currencyResponse = (CurrencyResponse) response;
                     sellCurrencyInfoList = currencyResponse.getCurrencyInfoList();
+                    lastUpdateSell = System.currentTimeMillis();
+                    mainActivityActivity.updateSellStatistic();
+                    if (listHandler != null) {
+                        createMoreSellCurrencyInfoItems(listHandler);
+                    }
+                    System.out.println("BIZON DataService.updateSell response");
+                } else {
+//                    // через REQUEST_ATTEMPT_INTERVAL мс пробуем еще раз
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateSell(listHandler);
+                        }
+                    }, REQUEST_ATTEMPT_INTERVAL);
                 }
-                lastUpdateSell = System.currentTimeMillis();
-                updateSellProcess = false;
-                mainActivityActivity.updateSellStatistic();
-                System.out.println("BIZON DataService.updateSell response");
             }
         });
     }
@@ -104,37 +139,36 @@ public class DataService {
         }));
     }
 
-
-    public void createMoreBuyCurrencyInfoItems(ListHandler handler) {
+    public void createMoreBuyCurrencyInfoItems(final ListHandler handler) {
         System.out.println("BIZON DataService.createMoreBuyCurrencyInfoItems");
-        while (updateBuyProcess) {
-            // wait
-        }
-
         if (System.currentTimeMillis() - lastUpdateBuy > UPDATE_INTERVAL) {
-            updateBuy();
-            handler.removeAllItems();
-            createMoreBuyCurrencyInfoItems(handler);
+            updateBuy(handler);
             return;
         }
 
-        handler.takeMoreItems(buyCurrencyInfoList.size(), buyCurrencyInfoList);
+        mainActivityActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                handler.removeAllItems();
+                handler.takeMoreItems(buyCurrencyInfoList.size(), buyCurrencyInfoList);
+            }
+        });
     }
 
-    public void createMoreSellCurrencyInfoItems(ListHandler handler) {
+    public void createMoreSellCurrencyInfoItems(final ListHandler handler) {
         System.out.println("BIZON DataService.createMoreSellCurrencyInfoItems");
-        while (updateSellProcess) {
-            // wait
-        }
-
         if (System.currentTimeMillis() - lastUpdateSell > UPDATE_INTERVAL) {
-            updateSell();
-            handler.removeAllItems();
-            createMoreSellCurrencyInfoItems(handler);
+            updateSell(handler);
             return;
         }
 
-        handler.takeMoreItems(sellCurrencyInfoList.size(), sellCurrencyInfoList);
+        mainActivityActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                handler.removeAllItems();
+                handler.takeMoreItems(sellCurrencyInfoList.size(), sellCurrencyInfoList);
+            }
+        });
     }
 
 
@@ -214,6 +248,4 @@ public class DataService {
 
         return 0;
     }
-
-
 }

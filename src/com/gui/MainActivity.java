@@ -3,6 +3,7 @@ package com.gui;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
     // Tab titles
-    private String[] tabs = {"ПОКУПАЮТ", "ПРОДАЮТ"};
+    private int[] tabsTitleIDs = {R.string.buy_title, R.string.sell_title};
 
     /**
      * Called when the activity is first created.
@@ -39,7 +40,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         setContentView(R.layout.activity_main);
 
-        DataService.getInstance().setMainActivityActivity(this);
+        DataService.getInstance(this);
 
         // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -54,9 +55,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Adding Tabs
-        for (String tab_name : tabs) {
-            actionBar.addTab(actionBar.newTab().setText(tab_name)
-                    .setTabListener(this));
+        for (int id : tabsTitleIDs) {
+            actionBar.addTab(actionBar.newTab().setText(getString(id)).setTabListener(this));
         }
 
         /**
@@ -69,20 +69,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 // on changing the page
                 // make respected tab selected
                 actionBar.setSelectedNavigationItem(position);
-                System.out.println("BIZON MainActivity.onPageSelected");
             }
 
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
-                System.out.println("BIZON MainActivity.onPageScrolled");
             }
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
-                System.out.println("BIZON MainActivity.onPageScrollStateChanged");
             }
         });
-
     }
 
     @Override
@@ -96,6 +92,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // show respected fragment view
         int position = tab.getPosition();
         viewPager.setCurrentItem(position);
+        Fragment fragment = mAdapter.getFragment(position);
+        if (fragment instanceof IFragmentListener) {
+            ((IFragmentListener) fragment).notifySelected();
+        }
+
         System.out.println("BIZON MainActivity.onTabSelected");
     }
 

@@ -3,13 +3,17 @@ package com.gui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 import com.gui.BuyActivity;
 import com.gui.SellActivity;
 import com.web.bean.logger.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TabsPagerAdapter extends FragmentPagerAdapter {
     private static final Class TABS[] = {BuyActivity.class, SellActivity.class};
-//    private static final Fragment FRAGMENTS[] = new Fragment[TABS.length];
+    private Map<Integer, Fragment> referenceMap = new HashMap<Integer, Fragment>(TABS.length);
 
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -19,8 +23,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int index) {
         if (TABS.length > index && index >= 0) {
             try {
-                return (Fragment) TABS[index].newInstance();
-//                return FRAGMENTS[index] = (Fragment) TABS[index].newInstance();
+                Fragment fragment = (Fragment) TABS[index].newInstance();
+                referenceMap.put(index, fragment);
+                return fragment;
             } catch (InstantiationException e) {
                 Logger.error("Fragment  InstantiationException getItem(int index)", e);
             } catch (IllegalAccessException e) {
@@ -36,10 +41,13 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
         return TABS.length;
     }
 
-//    public void notifySelected(int position) {
-//        if (TABS.length > position && position >= 0) {
-//             FRAGMENTS[position].
-//        }
-//
-//    }
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+        referenceMap.remove(position);
+    }
+
+    public Fragment getFragment(int key) {
+        return referenceMap.get(key);
+    }
 }

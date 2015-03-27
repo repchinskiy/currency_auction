@@ -16,7 +16,7 @@ import java.util.Comparator;
  * Created by Bizon on 24.03.2015.
  */
 public abstract class CurrencyAuctionActivity extends Fragment {
-    private CurrencyInfoAdapter currencyInfoAdapter;
+    protected CurrencyInfoAdapter currencyInfoAdapter;
     protected View rootView;
 
     private void hideAllSortArrow() {
@@ -36,7 +36,7 @@ public abstract class CurrencyAuctionActivity extends Fragment {
     }
 
     private View findViewById(int id) {
-       return rootView.findViewById(id);
+        return rootView.findViewById(id);
     }
 
     protected void initCurrencyInfoAdapter() {
@@ -120,7 +120,7 @@ public abstract class CurrencyAuctionActivity extends Fragment {
         currencyInfoAdapter = new CurrencyInfoAdapter(new ListItemsFactory<CurrencyInfo>() {
             @Override
             public void createMoreItems(ListHandler<CurrencyInfo> handler, int position) {
-                createMoreCurrencyInfoItems(handler);
+                updateData();
             }
 
             @Override
@@ -141,8 +141,7 @@ public abstract class CurrencyAuctionActivity extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initCurrencyInfoAdapter();
     }
 
-    protected abstract void createMoreCurrencyInfoItems(ListHandler<CurrencyInfo> handler);
+    protected abstract void updateData();
 }
