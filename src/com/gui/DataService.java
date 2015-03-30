@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class DataService {
     private final static long UPDATE_INTERVAL = 60_000;
-    private final static long REQUEST_ATTEMPT_INTERVAL = 3000;
+    private final static long REQUEST_ATTEMPT_INTERVAL = 3_000;
 
     private static DataService instance;
     private WebClient webClient;

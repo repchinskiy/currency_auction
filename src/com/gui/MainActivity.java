@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.*;
 import com.example.currency_auction.R;
 import com.gui.adapter.TabsPagerAdapter;
 
@@ -29,7 +30,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
     // Tab titles
-    private int[] tabsTitleIDs = {R.string.buy_title, R.string.sell_title};
+    private int[] tabsTitleIDs = {R.string.buy_title, R.string.sell_title, R.string.graphic_title};
 
     /**
      * Called when the activity is first created.
@@ -79,6 +80,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+
+        initRegionDialog();
     }
 
     @Override
@@ -103,6 +106,34 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
         System.out.println("BIZON MainActivity.onTabUnselected");
+    }
+
+
+    private void initRegionDialog() {
+        // адаптер
+        String[] data = {"Днепропетровск", "Киев", "Харьков", "Запорожье", "Львов"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spinner = (Spinner) findViewById(R.id.select_region_dialog);
+        spinner.setAdapter(adapter);
+        // заголовок
+        spinner.setPrompt("Выберите регион");
+        // выделяем элемент
+        spinner.setSelection(0);
+        // устанавливаем обработчик нажатия
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                // показываем позиция нажатого элемента
+//                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
     }
 
     public void updateBuyStatistic() {

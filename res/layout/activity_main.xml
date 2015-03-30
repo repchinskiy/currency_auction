@@ -2,6 +2,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+    <Spinner
+            android:id="@+id/select_region_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    </Spinner>
     <include layout="@layout/statistic_header"/>
     <android.support.v4.view.ViewPager
             android:id="@+id/pager"

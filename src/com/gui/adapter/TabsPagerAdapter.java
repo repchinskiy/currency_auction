@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 import com.gui.BuyActivity;
+import com.gui.GraphicActivity;
 import com.gui.SellActivity;
 import com.web.bean.logger.Logger;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
-    private static final Class TABS[] = {BuyActivity.class, SellActivity.class};
+    private static final Class TABS[] = {BuyActivity.class, SellActivity.class, GraphicActivity.class};
     private Map<Integer, Fragment> referenceMap = new HashMap<Integer, Fragment>(TABS.length);
 
     public TabsPagerAdapter(FragmentManager fm) {
